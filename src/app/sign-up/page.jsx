@@ -1,18 +1,17 @@
 "use client";
 import { useState } from "react";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuthContext } from "../context/auth";
 import ShowMessage from "../components/showMessage";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
+  const { signUp } = useAuthContext();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((cred) => console.log(cred))
+      signUp(email, password)
         .then(setEmail(""))
         .then(setPassword(""))
         .then(setConfirmPassword(""))
