@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useAuthContext } from "../context/auth";
+import { useRouter } from "next/navigation";
 import ShowMessage from "../components/showMessage";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
+  const router = useRouter();
   const { signUp } = useAuthContext();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ const SignUp = () => {
         .then(setEmail(""))
         .then(setPassword(""))
         .then(setConfirmPassword(""))
+        .then(router.push("/"))
         .then(setMessage({ message: "Success", error: false }))
         .catch((error) => console.error(error));
     } else {
