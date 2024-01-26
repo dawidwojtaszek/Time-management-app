@@ -14,7 +14,7 @@ const SignIn = () => {
       .then((cred) => console.log(cred))
       .then(setEmail(""))
       .then(setPassword(""))
-      .then(router.push("/"))
+      .then(router.push("/dashboard"))
       .catch((error) => console.error(error));
   };
 
