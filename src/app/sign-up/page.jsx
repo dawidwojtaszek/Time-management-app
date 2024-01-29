@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/auth";
 import { useRouter } from "next/navigation";
+import { addUser } from "../config/firebase";
+
 import ShowMessage from "../components/showMessage";
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -10,18 +12,30 @@ const SignUp = () => {
   const [message, setMessage] = useState(null);
   const router = useRouter();
   const { signUp } = useAuthContext();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      signUp(email, password)
-        .then(setEmail(""))
-        .then(setPassword(""))
-        .then(setConfirmPassword(""))
-        .then(router.push("/"))
-        .then(setMessage({ message: "Success", error: false }))
-        .catch((error) => console.error(error));
-    } else {
-      setMessage({ message: "different passwords", error: true });
+    try {
+      const userCredential = await signUp(email, password);
+      await addUser(
+        {
+          projects: ["test"],
+          tesks: {
+            active: true,
+            id: "asdfee",
+            name: "melo",
+            project: "personal",
+          },
+        },
+        userCredential.user.uid
+      );
+
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      router.push("/");
+      setMessage({ message: "Success", error: false });
+    } catch (error) {
+      console.error(error);
     }
   };
 
