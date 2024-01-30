@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { useAuthContext } from "../context/auth";
+import { useUserDataContext } from "../context/userData";
 import { useRouter } from "next/navigation";
-import { addUser } from "../config/firebase";
 
 import ShowMessage from "../components/showMessage";
 const SignUp = () => {
@@ -12,11 +12,12 @@ const SignUp = () => {
   const [message, setMessage] = useState(null);
   const router = useRouter();
   const { signUp } = useAuthContext();
+  const { createUser } = useUserDataContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const userCredential = await signUp(email, password);
-      await addUser(
+      await createUser(
         {
           projects: ["test"],
           tesks: {
