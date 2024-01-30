@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "../context/auth";
+import { useFirebaseContext } from "../context/firebase";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { logIn } = useAuthContext();
+  const { logIn } = useFirebaseContext();
   const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();

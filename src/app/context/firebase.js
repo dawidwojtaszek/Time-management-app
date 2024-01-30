@@ -6,12 +6,20 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 
-const AuthContext = createContext();
+const FirebaseContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const FirebaseProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   const signUp = (email, password) =>
     createUserWithEmailAndPassword(auth, email, password);
@@ -20,6 +28,16 @@ export const AuthProvider = ({ children }) => {
 
   const logIn = (email, password) =>
     signInWithEmailAndPassword(auth, email, password);
+
+  const db = getFirestore();
+  const createUser = async (userData, userId) => {
+    try {
+      const docRef = doc(db, "users", userId);
+      await setDoc(docRef, userData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -35,9 +53,14 @@ export const AuthProvider = ({ children }) => {
     signUp,
     logOut,
     logIn,
+    createUser,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <FirebaseContext.Provider value={value}>
+      {children}
+    </FirebaseContext.Provider>
+  );
 };
 
-export const useAuthContext = () => useContext(AuthContext);
+export const useFirebaseContext = () => useContext(FirebaseContext);

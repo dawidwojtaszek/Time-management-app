@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useAuthContext } from "../context/auth";
-import { useUserDataContext } from "../context/userData";
+import { useFirebaseContext } from "../context/firebase";
 import { useRouter } from "next/navigation";
 
 import ShowMessage from "../components/showMessage";
@@ -11,8 +10,7 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const router = useRouter();
-  const { signUp } = useAuthContext();
-  const { createUser } = useUserDataContext();
+  const { signUp, createUser } = useFirebaseContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

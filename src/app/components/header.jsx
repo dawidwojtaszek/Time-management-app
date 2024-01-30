@@ -2,10 +2,10 @@
 import Nav from "../components/nav";
 import UserNav from "./user-nav";
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "../context/auth";
+import { useFirebaseContext } from "../context/firebase";
 import Link from "next/link";
 const Header = () => {
-  const { currentUser, logOut } = useAuthContext();
+  const { currentUser, logOut } = useFirebaseContext();
   const router = useRouter();
   return (
     <header className="w-full bg-slate-900 text-white flex justify-center h-28">
