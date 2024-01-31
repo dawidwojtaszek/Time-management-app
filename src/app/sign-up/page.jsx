@@ -18,7 +18,7 @@ const SignUp = () => {
       await createUser(
         {
           projects: ["test"],
-          tesks: [
+          tasks: [
             {
               active: true,
               id: "asdfee",
