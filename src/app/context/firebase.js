@@ -9,7 +9,7 @@ import {
 import {
   getFirestore,
   collection,
-  getDocs,
+  getDoc,
   doc,
   setDoc,
 } from "firebase/firestore";
@@ -40,15 +40,22 @@ export const FirebaseProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
       setLoading(false);
+
+      if (user != null) {
+        const dataRef = doc(db, "users", user.uid);
+        const userData = await getDoc(dataRef);
+        setUserData(userData.data());
+      } else setUserData(null);
     });
     return unsubscribe;
   }, []);
 
   const value = {
     currentUser,
+    userData,
     loading,
     signUp,
     logOut,

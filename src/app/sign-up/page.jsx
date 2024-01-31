@@ -18,12 +18,14 @@ const SignUp = () => {
       await createUser(
         {
           projects: ["test"],
-          tesks: {
-            active: true,
-            id: "asdfee",
-            name: "melo",
-            project: "personal",
-          },
+          tesks: [
+            {
+              active: true,
+              id: "asdfee",
+              name: "melo",
+              project: "personal",
+            },
+          ],
         },
         userCredential.user.uid
       );

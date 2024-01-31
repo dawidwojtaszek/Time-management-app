@@ -23,12 +23,12 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-const db = getFirestore();
-const colectionRef = collection(db, "test");
-const userColectionRef = collection(db, "users");
+// const db = getFirestore();
+// const colectionRef = collection(db, "test");
+// const userColectionRef = collection(db, "users");
 
-export const documents = getDocs(colectionRef);
-export const getUsers = getDocs(userColectionRef);
+// export const documents = getDocs(colectionRef);
+// export const getUsers = getDocs(userColectionRef);
 export const addUser = async (userData, userId) => {
   try {
     const docRef = doc(db, "users", userId);
