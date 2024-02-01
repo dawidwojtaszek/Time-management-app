@@ -10,12 +10,12 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const router = useRouter();
-  const { signUp, createUser } = useFirebaseContext();
+  const { signUp, setUserDataInStorage } = useFirebaseContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const userCredential = await signUp(email, password);
-      await createUser(
+      await setUserDataInStorage(
         {
           projects: ["test"],
           tasks: [

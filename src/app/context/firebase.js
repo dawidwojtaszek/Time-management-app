@@ -14,6 +14,7 @@ export const FirebaseProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
+  const [localUserData, setLocalUserData] = useState(null);
 
   const signUp = (email, password) =>
     createUserWithEmailAndPassword(auth, email, password);
@@ -24,7 +25,7 @@ export const FirebaseProvider = ({ children }) => {
     signInWithEmailAndPassword(auth, email, password);
 
   const db = getFirestore();
-  const createUser = async (userData, userId) => {
+  const setUserDataInStorage = async (userData, userId) => {
     try {
       const docRef = doc(db, "users", userId);
       await setDoc(docRef, userData);
@@ -42,6 +43,7 @@ export const FirebaseProvider = ({ children }) => {
         const dataRef = doc(db, "users", user.uid);
         const userData = await getDoc(dataRef);
         setUserData(userData.data());
+        console.log("user data changed");
         setLoading(false);
       } else {
         setUserData(null);
@@ -58,7 +60,7 @@ export const FirebaseProvider = ({ children }) => {
     signUp,
     logOut,
     logIn,
-    createUser,
+    setUserDataInStorage,
   };
 
   return (
