@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useFirebaseContext } from "../context/firebase";
+import { v4 as uuid } from "uuid";
 const AddTask = () => {
   const [inputField, setInputField] = useState("");
   const { setUserDataInStorage, userData, currentUser } = useFirebaseContext();
@@ -8,10 +9,11 @@ const AddTask = () => {
   const addItem = async (e) => {
     e.preventDefault();
     try {
+      const id = uuid();
       const newUserTask = [...userData.tasks];
       newUserTask.push({
         active: true,
-        id: "test",
+        id: id,
         name: inputField,
         project: "inbox",
       });
@@ -20,6 +22,7 @@ const AddTask = () => {
         tasks: newUserTask,
       };
       await setUserDataInStorage(newUserData, currentUser.uid);
+      setInputField("");
     } catch {
       console.log("error");
     }
