@@ -1,4 +1,5 @@
 import TaskItem from "./task-item";
+import AddTask from "./add-task";
 import { useFirebaseContext } from "../context/firebase";
 const TaskList = () => {
   const { userData } = useFirebaseContext();
@@ -6,7 +7,8 @@ const TaskList = () => {
     e.target.parentElement.remove();
   };
   return (
-    <div className="flex w-full bg-slate-600">
+    <div className="flex w-full bg-slate-600 flex-col p-4">
+      <AddTask />
       {userData.tasks.map((e, index) => (
         <TaskItem task={e} key={index} />
       ))}
