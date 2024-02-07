@@ -14,7 +14,7 @@ export const FirebaseProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
-  const [localUserData, setLocalUserData] = useState(null);
+  const [localTasks, setLocalTasks] = useState(null);
 
   const signUp = (email, password) =>
     createUserWithEmailAndPassword(auth, email, password);
@@ -43,10 +43,11 @@ export const FirebaseProvider = ({ children }) => {
         const dataRef = doc(db, "users", user.uid);
         const userData = await getDoc(dataRef);
         setUserData(userData.data());
-        console.log("user data changed");
+        setLocalTasks(userData.data().tasks);
         setLoading(false);
       } else {
         setUserData(null);
+        setLocalTasks(null);
         setLoading(false);
       }
     });
@@ -57,9 +58,11 @@ export const FirebaseProvider = ({ children }) => {
     currentUser,
     userData,
     loading,
+    localTasks,
     signUp,
     logOut,
     logIn,
+    setLocalTasks,
     setUserDataInStorage,
   };
 

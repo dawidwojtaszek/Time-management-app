@@ -4,7 +4,8 @@ import { useFirebaseContext } from "../context/firebase";
 import { v4 as uuid } from "uuid";
 const AddTask = () => {
   const [inputField, setInputField] = useState("");
-  const { setUserDataInStorage, userData, currentUser } = useFirebaseContext();
+  const { setUserDataInStorage, userData, currentUser, setLocalTasks } =
+    useFirebaseContext();
 
   const addItem = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const AddTask = () => {
         tasks: newUserTask,
       };
       await setUserDataInStorage(newUserData, currentUser.uid);
+      setLocalTasks(newUserData.tasks);
       setInputField("");
     } catch {
       console.log("error");
