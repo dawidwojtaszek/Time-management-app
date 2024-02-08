@@ -4,8 +4,14 @@ import { useFirebaseContext } from "../context/firebase";
 import { v4 as uuid } from "uuid";
 const AddTask = () => {
   const [inputField, setInputField] = useState("");
-  const { setUserDataInStorage, userData, currentUser, setLocalTasks } =
-    useFirebaseContext();
+  const [selectField, setSelectField] = useState("inbox");
+  const {
+    setUserDataInStorage,
+    userData,
+    currentUser,
+    setLocalTasks,
+    localProjects,
+  } = useFirebaseContext();
 
   const addItem = async (e) => {
     e.preventDefault();
@@ -16,7 +22,7 @@ const AddTask = () => {
         active: true,
         id: id,
         name: inputField,
-        project: "inbox",
+        project: selectField,
       });
       const newUserData = {
         projects: [...userData.projects],
@@ -40,6 +46,17 @@ const AddTask = () => {
           value={inputField}
           onChange={(e) => setInputField(e.target.value)}
         />
+        <select
+          className=" mx-3 text-black bg-slate-400 px-3 rounded-md"
+          onChange={(e) => setSelectField(e.target.value)}
+        >
+          <option value="inbox">Inbox</option>
+          {localProjects.map((e, index) => (
+            <option key={index} value={e}>
+              {e}
+            </option>
+          ))}
+        </select>
         <button
           className="w-[130px] py-3 bg-lime-600 text-black rounded-md"
           type="submit"
