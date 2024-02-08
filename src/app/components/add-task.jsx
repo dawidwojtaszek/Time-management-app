@@ -11,6 +11,7 @@ const AddTask = () => {
     currentUser,
     setLocalTasks,
     localProjects,
+    updateLocalUserData,
   } = useFirebaseContext();
 
   const addItem = async (e) => {
@@ -29,6 +30,7 @@ const AddTask = () => {
         tasks: newUserTask,
       };
       await setUserDataInStorage(newUserData, currentUser.uid);
+      await updateLocalUserData();
       setLocalTasks(newUserData.tasks);
       setInputField("");
     } catch {

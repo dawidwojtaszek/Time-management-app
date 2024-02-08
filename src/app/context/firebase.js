@@ -35,6 +35,12 @@ export const FirebaseProvider = ({ children }) => {
     }
   };
 
+  const updateLocalUserData = async () => {
+    const dataRef = doc(db, "users", currentUser.uid);
+    const currentData = await getDoc(dataRef);
+    setUserData(currentData.data());
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
@@ -69,6 +75,7 @@ export const FirebaseProvider = ({ children }) => {
     setLocalProject,
     setLocalTasks,
     setUserDataInStorage,
+    updateLocalUserData,
   };
 
   return (
