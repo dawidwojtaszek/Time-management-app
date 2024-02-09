@@ -33,6 +33,7 @@ const AddTask = () => {
       await updateLocalUserData();
       setLocalTasks(newUserData.tasks);
       setInputField("");
+      document.getElementById("select").selectedIndex = 0;
     } catch {
       console.log("error");
     }
@@ -51,6 +52,7 @@ const AddTask = () => {
         <select
           className=" mx-3 text-black bg-slate-400 px-3 rounded-md"
           onChange={(e) => setSelectField(e.target.value)}
+          id="select"
         >
           <option value="inbox">Inbox</option>
           {localProjects.map((e, index) => (

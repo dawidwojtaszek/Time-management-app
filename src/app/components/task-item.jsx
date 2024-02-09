@@ -26,8 +26,9 @@ const TaskItem = ({ task }) => {
   return (
     <div className=" p-4 min-h-[60px] mb-3 border-white rounded-md border flex justify-between">
       <div className="flex items-center">
+        {/* <input type="checkbox" className="mr-1" /> */}
         <span>{task.name}</span>
-        <div className=" bg-lime-300 text-black rounded-md text-xs ml-4 ">
+        <div className=" bg-lime-300 text-black rounded-md text-xs ml-4 px-2 ">
           {task.project}
         </div>
       </div>
